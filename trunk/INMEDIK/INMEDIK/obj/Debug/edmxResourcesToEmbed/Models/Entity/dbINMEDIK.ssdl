@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="dbIdSalud_mattelModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="dbIdSalud_1005_21022022Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Address">
     <Key>
       <PropertyRef Name="id" />
@@ -1372,6 +1372,7 @@
     <Property Name="IMC" Type="decimal" Precision="18" Scale="2" />
     <Property Name="PainScale" Type="nvarchar" MaxLength="5" />
     <Property Name="PainScaleAdult" Type="int" />
+    <Property Name="saveVitalSigns" Type="bit" />
   </EntityType>
   <EntityType Name="EvolPreviousResult">
     <Key>
@@ -1421,6 +1422,7 @@
     <Property Name="CreatedBy" Type="int" />
     <Property Name="Created" Type="datetime" />
     <Property Name="Age" Type="varchar" MaxLength="20" />
+    <Property Name="OrderId" Type="int" />
   </EntityType>
   <EntityType Name="Expenses">
     <Key>
@@ -1945,6 +1947,7 @@
     <Property Name="Deleted" Type="bit" Nullable="false" />
     <Property Name="Created" Type="datetime" />
     <Property Name="Updated" Type="datetime" />
+    <Property Name="CompanyName" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="PreviousResult">
     <Key>
@@ -1974,7 +1977,7 @@
     <Property Name="Nurse" Type="bit" />
     <Property Name="Notes" Type="varchar" MaxLength="200" />
     <Property Name="CreatedBy" Type="int" />
-    <Property Name="Created" Type="datetime" Nullable="false" />
+    <Property Name="Created" Type="datetime" />
     <Property Name="ProductNoteId" Type="int" />
     <Property Name="Quantity" Type="int" />
     <Property Name="EvolutionNoteId" Type="int" />
@@ -2009,7 +2012,7 @@
     <Property Name="EvolutionNoteId" Type="int" />
     <Property Name="Consecutivo" Type="int" />
     <Property Name="Nombre" Type="nvarchar" MaxLength="500" />
-    <Property Name="RecipeText" Type="varchar(max)" />
+    <Property Name="RecipeText" Type="varchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="RecordInvoice">
     <Key>
@@ -2082,22 +2085,20 @@
     <Property Name="AHFDiseaseId" Type="int" Nullable="false" />
     <Property Name="AHFFamilyId" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="RelConsultChronicDisease">
-    <Key>
-      <PropertyRef Name="idChronicDisease" />
-      <PropertyRef Name="idElectronicFile" />
-    </Key>
-    <Property Name="idChronicDisease" Type="int" Nullable="false" />
-    <Property Name="idElectronicFile" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="RelConsultDisease">
-    <Key>
-      <PropertyRef Name="idElectronicFile" />
-      <PropertyRef Name="idDisease" />
-    </Key>
-    <Property Name="idElectronicFile" Type="int" Nullable="false" />
-    <Property Name="idDisease" Type="int" Nullable="false" />
-  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'dbIdSalud_1005_21022022.dbo.RelConsultChronicDisease' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="RelConsultChronicDisease">
+          <Property Name="idChronicDisease" Type="int" />
+          <Property Name="idElectronicFile" Type="int" />
+          <Property Name="idConsult" Type="int" />
+        </EntityType>-->
+  <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'dbIdSalud_1005_21022022.dbo.RelConsultDisease' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="RelConsultDisease">
+          <Property Name="idElectronicFile" Type="int" />
+          <Property Name="idConsult" Type="int" />
+          <Property Name="idDisease" Type="int" />
+        </EntityType>-->
   <EntityType Name="RelDiscountClinic">
     <Key>
       <PropertyRef Name="idDiscount" />
@@ -2220,6 +2221,23 @@
     <Property Name="Age" Type="varchar" MaxLength="20" />
     <Property Name="RecipeId" Type="int" />
     <Property Name="FileId" Type="int" />
+  </EntityType>
+  <EntityType Name="ServiceOld">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="PatientId" Type="int" Nullable="false" />
+    <Property Name="ClinicId" Type="int" Nullable="false" />
+    <Property Name="MedicId" Type="int" Nullable="false" />
+    <Property Name="StatusId" Type="int" Nullable="false" />
+    <Property Name="ConceptId" Type="int" Nullable="false" />
+    <Property Name="Notes" Type="varchar" MaxLength="1000" />
+    <Property Name="NurseId" Type="int" />
+    <Property Name="Updated" Type="datetime" />
+    <Property Name="Age" Type="varchar" MaxLength="20" />
+    <Property Name="OrderConceptId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Specialty">
     <Key>
@@ -2462,7 +2480,7 @@
     <Property Name="ExamId" Type="int" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAllConcepts' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAllConcepts' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAllConcepts">
     <Key>
       <PropertyRef Name="id" />
@@ -2487,7 +2505,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAllConcepts' no tiene
     <Property Name="InStock" Type="int" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAllConcepts_ant' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAllConcepts_ant' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAllConcepts_ant">
     <Key>
       <PropertyRef Name="id" />
@@ -2511,7 +2529,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAllConcepts_ant' no t
     <Property Name="Iva" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAllConceptsOnlyProducts' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAllConceptsOnlyProducts' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAllConceptsOnlyProducts">
     <Key>
       <PropertyRef Name="id" />
@@ -2534,7 +2552,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAllConceptsOnlyProduc
     <Property Name="Iva" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAllProducts' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAllProducts' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAllProducts">
     <Key>
       <PropertyRef Name="id" />
@@ -2557,7 +2575,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAllProducts' no tiene
     <Property Name="Iva" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAllProductsExist' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAllProductsExist' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAllProductsExist">
     <Key>
       <PropertyRef Name="CategoryId" />
@@ -2588,7 +2606,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAllProductsExist' no 
     <Property Name="stockId" Type="int" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmAllConcepts' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmAllConcepts' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmAllConcepts">
     <Key>
       <PropertyRef Name="id" />
@@ -2616,7 +2634,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmAllConcepts' no ti
     <Property Name="IsWarehouse" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchBilling' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmBranchBilling' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmBranchBilling">
     <Key>
       <PropertyRef Name="id" />
@@ -2641,7 +2659,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchBilling' no 
     <Property Name="clinicName" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchBillingConceptDetail' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmBranchBillingConceptDetail' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmBranchBillingConceptDetail">
     <Key>
       <PropertyRef Name="AlmBranchRequestToDeliveryId" />
@@ -2663,7 +2681,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchBillingConce
     <Property Name="Returned" Type="int" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchReportFactToCharge' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmBranchReportFactToCharge' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmBranchReportFactToCharge">
     <Key>
       <PropertyRef Name="id" />
@@ -2690,7 +2708,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchReportFactTo
     <Property Name="clinicName" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchReqResult' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmBranchReqResult' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmBranchReqResult">
     <Key>
       <PropertyRef Name="Id" />
@@ -2721,7 +2739,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchReqResult' n
     <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequest' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmBranchRequest' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmBranchRequest">
     <Key>
       <PropertyRef Name="Id" />
@@ -2744,7 +2762,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequest' no 
     <Property Name="Responded" Type="datetime" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequestConfirmed' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmBranchRequestConfirmed' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmBranchRequestConfirmed">
     <Key>
       <PropertyRef Name="Id" />
@@ -2770,7 +2788,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequestConfi
     <Property Name="Seen" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequestConfirmedTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmBranchRequestConfirmedTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmBranchRequestConfirmedTransaction">
     <Key>
       <PropertyRef Name="AlmBranchRequestTransaction" />
@@ -2793,7 +2811,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequestConfi
     <Property Name="Price" Type="decimal" Precision="8" Scale="2" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequestDelivered' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmBranchRequestDelivered' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmBranchRequestDelivered">
     <Key>
       <PropertyRef Name="Id" />
@@ -2822,7 +2840,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequestDeliv
     <Property Name="Fact" Type="nvarchar" MaxLength="20" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequestDeliveredTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmBranchRequestDeliveredTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmBranchRequestDeliveredTransaction">
     <Key>
       <PropertyRef Name="AlmBranchRequestDeliveredTransactionId" />
@@ -2858,7 +2876,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequestDeliv
     <Property Name="Batch" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequestRejected' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmBranchRequestRejected' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmBranchRequestRejected">
     <Key>
       <PropertyRef Name="Id" />
@@ -2882,7 +2900,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequestRejec
     <Property Name="Created" Type="datetime" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequestRejectedTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmBranchRequestRejectedTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmBranchRequestRejectedTransaction">
     <Key>
       <PropertyRef Name="AlmBranchRequestTransaction" />
@@ -2905,7 +2923,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequestRejec
     <Property Name="Price" Type="decimal" Precision="8" Scale="2" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequestResponse' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmBranchRequestResponse' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmBranchRequestResponse">
     <Key>
       <PropertyRef Name="Id" />
@@ -2931,7 +2949,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequestRespo
     <Property Name="Seen" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequestResponseTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmBranchRequestResponseTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmBranchRequestResponseTransaction">
     <Key>
       <PropertyRef Name="AlmBranchRequestTransactionId" />
@@ -2954,7 +2972,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequestRespo
     <Property Name="Price" Type="decimal" Precision="8" Scale="2" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequestToDelivery' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmBranchRequestToDelivery' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmBranchRequestToDelivery">
     <Key>
       <PropertyRef Name="Id" />
@@ -2984,7 +3002,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequestToDel
     <Property Name="Seen" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequestToDeliveryTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmBranchRequestToDeliveryTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmBranchRequestToDeliveryTransaction">
     <Key>
       <PropertyRef Name="AlmBranchRequestToDeliveryTransactionId" />
@@ -3018,7 +3036,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmBranchRequestToDel
     <Property Name="MaxPrice" Type="decimal" Precision="8" Scale="2" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierBilling' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmSupplierBilling' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmSupplierBilling">
     <Key>
       <PropertyRef Name="id" />
@@ -3043,7 +3061,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierBilling' n
     <Property Name="supplierName" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierBillingConceptDetail' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmSupplierBillingConceptDetail' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmSupplierBillingConceptDetail">
     <Key>
       <PropertyRef Name="AlmSupplierRequestToDeliveryId" />
@@ -3065,7 +3083,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierBillingCon
     <Property Name="Returned" Type="int" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierReportFactToPay' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmSupplierReportFactToPay' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmSupplierReportFactToPay">
     <Key>
       <PropertyRef Name="id" />
@@ -3092,7 +3110,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierReportFact
     <Property Name="supplierName" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierReqResult' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmSupplierReqResult' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmSupplierReqResult">
     <Key>
       <PropertyRef Name="Id" />
@@ -3121,7 +3139,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierReqResult'
     <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequest' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmSupplierRequest' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmSupplierRequest">
     <Key>
       <PropertyRef Name="Id" />
@@ -3142,7 +3160,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequest' n
     <Property Name="hasResponse" Type="int" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestCancelled' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmSupplierRequestCancelled' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmSupplierRequestCancelled">
     <Key>
       <PropertyRef Name="Id" />
@@ -3164,7 +3182,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestCan
     <Property Name="Updated" Type="datetime" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestCancelledTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmSupplierRequestCancelledTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmSupplierRequestCancelledTransaction">
     <Key>
       <PropertyRef Name="AlmSupplierRequestTransactionId" />
@@ -3189,7 +3207,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestCan
     <Property Name="Created" Type="datetime" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestConfirmed' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmSupplierRequestConfirmed' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmSupplierRequestConfirmed">
     <Key>
       <PropertyRef Name="Id" />
@@ -3215,7 +3233,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestCon
     <Property Name="Seen" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestConfirmedTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmSupplierRequestConfirmedTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmSupplierRequestConfirmedTransaction">
     <Key>
       <PropertyRef Name="AlmSupplierRequestResponseTransactionId" />
@@ -3237,7 +3255,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestCon
     <Property Name="Price" Type="decimal" Precision="8" Scale="2" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestDelivered' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmSupplierRequestDelivered' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmSupplierRequestDelivered">
     <Key>
       <PropertyRef Name="Id" />
@@ -3266,7 +3284,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestDel
     <Property Name="Invoice" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestDeliveredTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmSupplierRequestDeliveredTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmSupplierRequestDeliveredTransaction">
     <Key>
       <PropertyRef Name="AlmSupplierRequestDeliveredTransactionId" />
@@ -3299,7 +3317,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestDel
     <Property Name="Returned" Type="int" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestRejected' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmSupplierRequestRejected' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmSupplierRequestRejected">
     <Key>
       <PropertyRef Name="Id" />
@@ -3323,7 +3341,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestRej
     <Property Name="Created" Type="datetime" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestRejectedTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmSupplierRequestRejectedTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmSupplierRequestRejectedTransaction">
     <Key>
       <PropertyRef Name="AlmSupplierRequestResponseTransaction" />
@@ -3345,7 +3363,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestRej
     <Property Name="Price" Type="decimal" Precision="8" Scale="2" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestResponse' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmSupplierRequestResponse' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmSupplierRequestResponse">
     <Key>
       <PropertyRef Name="Id" />
@@ -3369,7 +3387,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestRes
     <Property Name="Seen" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestResponseHeader' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmSupplierRequestResponseHeader' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmSupplierRequestResponseHeader">
     <Key>
       <PropertyRef Name="RequestId" />
@@ -3387,7 +3405,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestRes
     <Property Name="Seen" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestResponseTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmSupplierRequestResponseTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmSupplierRequestResponseTransaction">
     <Key>
       <PropertyRef Name="AlmSupplierRequestTransactionId" />
@@ -3421,7 +3439,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestRes
     <Property Name="Created" Type="datetime" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestSupplier' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmSupplierRequestSupplier' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmSupplierRequestSupplier">
     <Key>
       <PropertyRef Name="Id" />
@@ -3445,7 +3463,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestSup
     <Property Name="Name" Type="varchar" MaxLength="50" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestToDelivery' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmSupplierRequestToDelivery' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmSupplierRequestToDelivery">
     <Key>
       <PropertyRef Name="Id" />
@@ -3471,7 +3489,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestToD
     <Property Name="Seen" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestToDeliveryTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmSupplierRequestToDeliveryTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmSupplierRequestToDeliveryTransaction">
     <Key>
       <PropertyRef Name="AlmSupplierRequestToDeliveryTransactionId" />
@@ -3502,7 +3520,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestToD
     <Property Name="MaxPrice" Type="decimal" Precision="8" Scale="2" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmSupplierRequestTransaction' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmSupplierRequestTransaction">
     <Key>
       <PropertyRef Name="AlmSupplierRequestTransactionId" />
@@ -3517,7 +3535,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmSupplierRequestTra
     <Property Name="Code" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmUserTimeHandler' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwAlmUserTimeHandler' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwAlmUserTimeHandler">
     <Key>
       <PropertyRef Name="Id" />
@@ -3546,7 +3564,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwAlmUserTimeHandler' n
     <Property Name="DifferenceTime" Type="int" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwCancelledPackages' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwCancelledPackages' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwCancelledPackages">
     <Key>
       <PropertyRef Name="Id" />
@@ -3566,7 +3584,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwCancelledPackages' no
     <Property Name="Refund" Type="numeric" Precision="8" Scale="2" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwCancelledTickets' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwCancelledTickets' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwCancelledTickets">
     <Key>
       <PropertyRef Name="id" />
@@ -3584,7 +3602,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwCancelledTickets' no 
     <Property Name="ClinicId" Type="int" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwCardPayments' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwCardPayments' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwCardPayments">
     <Key>
       <PropertyRef Name="EmployeeId" />
@@ -3604,7 +3622,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwCardPayments' no tien
     <Property Name="NumOperation" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwCashClosing' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwCashClosing' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwCashClosing">
     <Key>
       <PropertyRef Name="id" />
@@ -3626,7 +3644,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwCashClosing' no tiene
     <Property Name="ClinicId" Type="int" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwClinics' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwClinics' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwClinics">
     <Key>
       <PropertyRef Name="id" />
@@ -3653,7 +3671,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwClinics' no tiene def
     <Property Name="Percentage" Type="numeric" Precision="18" Scale="2" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwConceptProductivity' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwConceptProductivity' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwConceptProductivity">
     <Key>
       <PropertyRef Name="Orderid" />
@@ -3683,7 +3701,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwConceptProductivity' 
     <Property Name="IsCanceled" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwConsultByPatient' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwConsultByPatient' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwConsultByPatient">
     <Key>
       <PropertyRef Name="OrderId" />
@@ -3705,7 +3723,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwConsultByPatient' no 
     <Property Name="FullName" Type="nvarchar" MaxLength="152" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwCountyServices' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwCountyServices' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwCountyServices">
     <Key>
       <PropertyRef Name="CountyId" />
@@ -3731,7 +3749,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwCountyServices' no ti
     <Property Name="Created" Type="datetime" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwDepartamentProductivity' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwDepartamentProductivity' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwDepartamentProductivity">
     <Key>
       <PropertyRef Name="CountyId" />
@@ -3745,7 +3763,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwDepartamentProductivi
     <Property Name="ClinicId" Type="int" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwDiscountClinic' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwDiscountClinic' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwDiscountClinic">
     <Key>
       <PropertyRef Name="id" />
@@ -3767,7 +3785,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwDiscountClinic' no ti
     <Property Name="Deleted" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwDonations' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwDonations' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwDonations">
     <Key>
       <PropertyRef Name="orderId" />
@@ -3792,7 +3810,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwDonations' no tiene d
     <Property Name="Created" Type="datetime" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwElectronicFile' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwElectronicFile' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwElectronicFile">
     <Key>
       <PropertyRef Name="FileId" />
@@ -3814,7 +3832,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwElectronicFile' no ti
     <Property Name="Deleted" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwElectronicFilesUpdates' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwElectronicFilesUpdates' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwElectronicFilesUpdates">
     <Key>
       <PropertyRef Name="Id" />
@@ -3826,7 +3844,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwElectronicFilesUpdate
     <Property Name="ElectronicFileId" Type="int" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwField' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwField' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwField">
     <Key>
       <PropertyRef Name="id" />
@@ -3846,7 +3864,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwField' no tiene defin
     <Property Name="Deleted" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwForm' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwForm' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwForm">
     <Key>
       <PropertyRef Name="id" />
@@ -3867,7 +3885,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwForm' no tiene defini
     <Property Name="Updated" Type="datetime" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwInternment' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwInternment' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwInternment">
     <Key>
       <PropertyRef Name="id" />
@@ -3891,7 +3909,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwInternment' no tiene 
     <Property Name="sUpdated" Type="nvarchar" MaxLength="4000" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwIReturnHeader' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwIReturnHeader' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwIReturnHeader">
     <Key>
       <PropertyRef Name="Id" />
@@ -3909,7 +3927,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwIReturnHeader' no tie
     <Property Name="ClinicName" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwMaterialForRequest' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwMaterialForRequest' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwMaterialForRequest">
     <Key>
       <PropertyRef Name="ConceptId" />
@@ -3921,7 +3939,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwMaterialForRequest' n
     <Property Name="Name" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwMedicProductivity' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwMedicProductivity' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwMedicProductivity">
     <Key>
       <PropertyRef Name="ConceptId" />
@@ -3953,7 +3971,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwMedicProductivity' no
     <Property Name="ClinicId" Type="int" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwModule' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwModule' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwModule">
     <Key>
       <PropertyRef Name="id" />
@@ -3970,7 +3988,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwModule' no tiene defi
     <Property Name="Updated" Type="datetime" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwPatientChronicDisease' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwPatientChronicDisease' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwPatientChronicDisease">
     <Key>
       <PropertyRef Name="PatientName" />
@@ -3991,7 +4009,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwPatientChronicDisease
     <Property Name="ClinicId" Type="int" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwPatientsId' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwPatientsId' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwPatientsId">
     <Key>
       <PropertyRef Name="id" />
@@ -3999,7 +4017,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwPatientsId' no tiene 
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwPaymentReport' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwPaymentReport' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwPaymentReport">
     <Key>
       <PropertyRef Name="paymentId" />
@@ -4031,13 +4049,13 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwPaymentReport' no tie
     <Property Name="IsCanceled" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'dbIdSalud_mattel.dbo.vwPharmaceuticalForm' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+advertencia 6013: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwPharmaceuticalForm' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
         <EntityType Name="vwPharmaceuticalForm">
           <Property Name="PharmaceuticalForm" Type="nvarchar" MaxLength="100" />
           <Property Name="Presentation" Type="nvarchar" MaxLength="100" />
         </EntityType>-->
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwPharmacyProductivity' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwPharmacyProductivity' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwPharmacyProductivity">
     <Key>
       <PropertyRef Name="Id" />
@@ -4080,7 +4098,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwPharmacyProductivity'
     <Property Name="DiscountId" Type="int" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwProductivityConcept' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwProductivityConcept' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwProductivityConcept">
     <Key>
       <PropertyRef Name="Orderid" />
@@ -4097,7 +4115,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwProductivityConcept' 
     <Property Name="Quantity" Type="int" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwProductivityMedic' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwProductivityMedic' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwProductivityMedic">
     <Key>
       <PropertyRef Name="EmployeeId" />
@@ -4117,7 +4135,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwProductivityMedic' no
     <Property Name="ClinicId" Type="int" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwRecipe' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwRecipe' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwRecipe">
     <Key>
       <PropertyRef Name="NoteId" />
@@ -4125,7 +4143,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwRecipe' no tiene defi
     <Property Name="NoteId" Type="int" Nullable="false" />
     <Property Name="Nombre" Type="nvarchar" MaxLength="500" />
     <Property Name="ActiveSubstance" Type="nvarchar" MaxLength="100" />
-    <Property Name="RecipeText" Type="varchar(max)" />
+    <Property Name="RecipeText" Type="varchar" MaxLength="500" />
     <Property Name="CommercialBrand" Type="nvarchar" MaxLength="100" />
     <Property Name="DaysOfThreatment" Type="int" />
     <Property Name="Dose" Type="int" />
@@ -4136,7 +4154,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwRecipe' no tiene defi
     <Property Name="WayOfAdministration" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwReportHealth' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwReportHealth' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwReportHealth">
     <Key>
       <PropertyRef Name="DiseaseId" />
@@ -4150,7 +4168,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwReportHealth' no tien
     <Property Name="ClinicId" Type="int" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwRoundings' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwRoundings' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwRoundings">
     <Key>
       <PropertyRef Name="EmployeeId" />
@@ -4170,7 +4188,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwRoundings' no tiene d
     <Property Name="Ticket" Type="int" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwSales' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwSales' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwSales">
     <Key>
       <PropertyRef Name="OrderId" />
@@ -4214,7 +4232,35 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwSales' no tiene defin
     <Property Name="PaymentCreated" Type="datetime" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwStock' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwSchedule' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <EntityType Name="vwSchedule">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="PatientId" />
+      <PropertyRef Name="CategoryName" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="OrderId" Type="int" />
+    <Property Name="PatientId" Type="int" Nullable="false" />
+    <Property Name="ClinicId" Type="int" />
+    <Property Name="MedicId" Type="int" />
+    <Property Name="StatusId" Type="int" />
+    <Property Name="ConceptId" Type="int" />
+    <Property Name="Scheduled" Type="datetime" />
+    <Property Name="sScheduled" Type="nvarchar" MaxLength="4000" />
+    <Property Name="PatientName" Type="nvarchar" MaxLength="101" />
+    <Property Name="PatientBirthDate" Type="date" />
+    <Property Name="sPatientBirthDate" Type="nvarchar" MaxLength="4000" />
+    <Property Name="ClinicName" Type="nvarchar" MaxLength="100" />
+    <Property Name="MedicName" Type="nvarchar" MaxLength="101" />
+    <Property Name="StatusName" Type="varchar" MaxLength="50" />
+    <Property Name="ConceptName" Type="nvarchar" MaxLength="100" />
+    <Property Name="CategoryName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="OrderCreated" Type="datetime" />
+    <Property Name="sOrderCreated" Type="nvarchar" MaxLength="4000" />
+  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwStock' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwStock">
     <Key>
       <PropertyRef Name="id" />
@@ -4228,7 +4274,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwStock' no tiene defin
     <Property Name="ClinicId" Type="int" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwStockConcept' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwStockConcept' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwStockConcept">
     <Key>
       <PropertyRef Name="Id" />
@@ -4247,13 +4293,13 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwStockConcept' no tien
     <Property Name="SupplierName" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'dbIdSalud_mattel.dbo.vwSubstanceActive' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+advertencia 6013: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwSubstanceActive' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
         <EntityType Name="vwSubstanceActive">
           <Property Name="genericname" Type="nvarchar" MaxLength="100" />
           <Property Name="typeofinput" Type="nvarchar" MaxLength="50" />
         </EntityType>-->
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwUserTimeHandler' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwUserTimeHandler' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwUserTimeHandler">
     <Key>
       <PropertyRef Name="id" />
@@ -4282,7 +4328,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwUserTimeHandler' no t
     <Property Name="DifferenceTime" Type="int" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwWaitingTimes' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwWaitingTimes' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwWaitingTimes">
     <Key>
       <PropertyRef Name="Id" />
@@ -4314,7 +4360,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwWaitingTimes' no tien
     <Property Name="TotalMinutes" Type="int" />
   </EntityType>
   <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwWarehouseStock' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'dbIdSalud_1005_21022022.dbo.vwWarehouseStock' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="vwWarehouseStock">
     <Key>
       <PropertyRef Name="Name" />
@@ -6750,6 +6796,18 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwWarehouseStock' no ti
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Exam_Orders">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+    <End Role="Exam" Type="Self.Exam" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Exam">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Exam_Recipe">
     <End Role="Recipe" Type="Self.Recipe" Multiplicity="0..1" />
     <End Role="Exam" Type="Self.Exam" Multiplicity="*" />
@@ -8046,54 +8104,15 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwWarehouseStock' no ti
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_RelConsultChronicDisease_ChronicDisease">
-    <End Role="ChronicDisease" Type="Self.ChronicDisease" Multiplicity="1" />
-    <End Role="RelConsultChronicDisease" Type="Self.RelConsultChronicDisease" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ChronicDisease">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="RelConsultChronicDisease">
-        <PropertyRef Name="idChronicDisease" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_RelConsultChronicDisease_ElectronicFile">
-    <End Role="ElectronicFile" Type="Self.ElectronicFile" Multiplicity="1" />
-    <End Role="RelConsultChronicDisease" Type="Self.RelConsultChronicDisease" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ElectronicFile">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="RelConsultChronicDisease">
-        <PropertyRef Name="idElectronicFile" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_RelConsultDisease_Disease">
-    <End Role="Disease" Type="Self.Disease" Multiplicity="1" />
-    <End Role="RelConsultDisease" Type="Self.RelConsultDisease" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Disease">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="RelConsultDisease">
-        <PropertyRef Name="idDisease" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_RelConsultDisease_ElectronicFile">
-    <End Role="ElectronicFile" Type="Self.ElectronicFile" Multiplicity="1" />
-    <End Role="RelConsultDisease" Type="Self.RelConsultDisease" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ElectronicFile">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="RelConsultDisease">
-        <PropertyRef Name="idElectronicFile" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
+  <!--Errores durante la generación:
+error 6004: Una relación hace referencia a la tabla 'dbIdSalud_1005_21022022.dbo.RelConsultDisease', pero no se encuentra la tabla.
+        <Association Name="FK_RelConsultDisease_Consult" />-->
+  <!--Errores durante la generación:
+error 6004: Una relación hace referencia a la tabla 'dbIdSalud_1005_21022022.dbo.RelConsultDisease', pero no se encuentra la tabla.
+        <Association Name="FK_RelConsultDisease_Disease" />-->
+  <!--Errores durante la generación:
+error 6004: Una relación hace referencia a la tabla 'dbIdSalud_1005_21022022.dbo.RelConsultDisease', pero no se encuentra la tabla.
+        <Association Name="FK_RelConsultDisease_ElectronicFile" />-->
   <Association Name="FK_RelDiscountClinic_Clinic">
     <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
     <End Role="RelDiscountClinic" Type="Self.RelDiscountClinic" Multiplicity="*" />
@@ -8414,6 +8433,102 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwWarehouseStock' no ti
         <PropertyRef Name="id" />
       </Principal>
       <Dependent Role="Service">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceOld_Clinic">
+    <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
+    <End Role="ServiceOld" Type="Self.ServiceOld" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clinic">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ServiceOld">
+        <PropertyRef Name="ClinicId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceOld_Concept">
+    <End Role="Concept" Type="Self.Concept" Multiplicity="1" />
+    <End Role="ServiceOld" Type="Self.ServiceOld" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Concept">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ServiceOld">
+        <PropertyRef Name="ConceptId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceOld_Medic">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="ServiceOld" Type="Self.ServiceOld" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ServiceOld">
+        <PropertyRef Name="MedicId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceOld_Nurse">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="ServiceOld" Type="Self.ServiceOld" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ServiceOld">
+        <PropertyRef Name="NurseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceOld_Order">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+    <End Role="ServiceOld" Type="Self.ServiceOld" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ServiceOld">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceOld_OrderConcept">
+    <End Role="OrdersConcepts" Type="Self.OrdersConcepts" Multiplicity="1" />
+    <End Role="ServiceOld" Type="Self.ServiceOld" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrdersConcepts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ServiceOld">
+        <PropertyRef Name="OrderConceptId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceOld_Patient">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+    <End Role="ServiceOld" Type="Self.ServiceOld" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ServiceOld">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceOld_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="ServiceOld" Type="Self.ServiceOld" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ServiceOld">
         <PropertyRef Name="StatusId" />
       </Dependent>
     </ReferentialConstraint>
@@ -8778,40 +8893,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwWarehouseStock' no ti
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Function Name="sp_calc_supplierrequest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="referenceDate" Type="datetime" Mode="In" />
-  </Function>
-  <Function Name="sp_calc_warehouserequest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="referenceDate" Type="datetime" Mode="In" />
-    <Parameter Name="clinicId" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_getConceptsAutoComplete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="input" Type="nvarchar" Mode="In" />
-    <Parameter Name="categoryName" Type="nvarchar" Mode="In" />
-  </Function>
-  <Function Name="sp_getSales" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="Order_column" Type="nvarchar" Mode="In" />
-    <Parameter Name="DateBegin" Type="varchar" Mode="In" />
-    <Parameter Name="DateEnd" Type="varchar" Mode="In" />
-    <Parameter Name="Ticket" Type="nvarchar" Mode="In" />
-    <Parameter Name="Clinic" Type="nvarchar" Mode="In" />
-    <Parameter Name="EmployeeName" Type="nvarchar" Mode="In" />
-    <Parameter Name="PatientName" Type="nvarchar" Mode="In" />
-    <Parameter Name="Total" Type="nvarchar" Mode="In" />
-    <Parameter Name="Discount" Type="nvarchar" Mode="In" />
-    <Parameter Name="Paid" Type="varchar" Mode="In" />
-    <Parameter Name="Cancelled" Type="varchar" Mode="In" />
-    <Parameter Name="startRowIndex" Type="nvarchar" Mode="In" />
-    <Parameter Name="pageSize" Type="nvarchar" Mode="In" />
-    <Parameter Name="clinicIds" Type="nvarchar" Mode="In" />
-    <Parameter Name="totalCount" Type="int" Mode="InOut" />
-  </Function>
-  <Function Name="sp_reportLastPurchaseByProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="startDate" Type="datetime" Mode="In" />
-    <Parameter Name="endDate" Type="datetime" Mode="In" />
-    <Parameter Name="conceptId" Type="int" Mode="In" />
-  </Function>
-  <EntityContainer Name="dbIdSalud_mattelModelStoreContainer">
+  <EntityContainer Name="dbIdSalud_1005_21022022ModelStoreContainer">
     <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Advertisement" EntityType="Self.Advertisement" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AHF" EntityType="Self.AHF" Schema="dbo" store:Type="Tables" />
@@ -8969,8 +9051,6 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwWarehouseStock' no ti
     <EntitySet Name="RelAdvertisementFile" EntityType="Self.RelAdvertisementFile" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RelAdvertisementKeyword" EntityType="Self.RelAdvertisementKeyword" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RelAHFFam" EntityType="Self.RelAHFFam" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="RelConsultChronicDisease" EntityType="Self.RelConsultChronicDisease" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="RelConsultDisease" EntityType="Self.RelConsultDisease" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RelDiscountClinic" EntityType="Self.RelDiscountClinic" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RelFormField" EntityType="Self.RelFormField" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RelFormModule" EntityType="Self.RelFormModule" Schema="dbo" store:Type="Tables" />
@@ -8983,6 +9063,7 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwWarehouseStock' no ti
     <EntitySet Name="RouteOfAdministration" EntityType="Self.RouteOfAdministration" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ServiceOld" EntityType="Self.ServiceOld" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Specialty" EntityType="Self.Specialty" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
@@ -10052,6 +10133,29 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwWarehouseStock' no ti
     [vwSales].[PaymentCreated] AS [PaymentCreated]
     FROM [dbo].[vwSales] AS [vwSales]</DefiningQuery>
     </EntitySet>
+    <EntitySet Name="vwSchedule" EntityType="Self.vwSchedule" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vwSchedule].[id] AS [id], 
+    [vwSchedule].[OrderId] AS [OrderId], 
+    [vwSchedule].[PatientId] AS [PatientId], 
+    [vwSchedule].[ClinicId] AS [ClinicId], 
+    [vwSchedule].[MedicId] AS [MedicId], 
+    [vwSchedule].[StatusId] AS [StatusId], 
+    [vwSchedule].[ConceptId] AS [ConceptId], 
+    [vwSchedule].[Scheduled] AS [Scheduled], 
+    [vwSchedule].[sScheduled] AS [sScheduled], 
+    [vwSchedule].[PatientName] AS [PatientName], 
+    [vwSchedule].[PatientBirthDate] AS [PatientBirthDate], 
+    [vwSchedule].[sPatientBirthDate] AS [sPatientBirthDate], 
+    [vwSchedule].[ClinicName] AS [ClinicName], 
+    [vwSchedule].[MedicName] AS [MedicName], 
+    [vwSchedule].[StatusName] AS [StatusName], 
+    [vwSchedule].[ConceptName] AS [ConceptName], 
+    [vwSchedule].[CategoryName] AS [CategoryName], 
+    [vwSchedule].[OrderCreated] AS [OrderCreated], 
+    [vwSchedule].[sOrderCreated] AS [sOrderCreated]
+    FROM [dbo].[vwSchedule] AS [vwSchedule]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="vwStock" EntityType="Self.vwStock" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [vwStock].[id] AS [id], 
@@ -10934,6 +11038,10 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwWarehouseStock' no ti
       <End Role="ElectronicFile" EntitySet="ElectronicFile" />
       <End Role="Exam" EntitySet="Exam" />
     </AssociationSet>
+    <AssociationSet Name="FK_Exam_Orders" Association="Self.FK_Exam_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="Exam" EntitySet="Exam" />
+    </AssociationSet>
     <AssociationSet Name="FK_Exam_Recipe" Association="Self.FK_Exam_Recipe">
       <End Role="Recipe" EntitySet="Recipe" />
       <End Role="Exam" EntitySet="Exam" />
@@ -11366,22 +11474,6 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwWarehouseStock' no ti
       <End Role="AHFFamily" EntitySet="AHFFamily" />
       <End Role="RelAHFFam" EntitySet="RelAHFFam" />
     </AssociationSet>
-    <AssociationSet Name="FK_RelConsultChronicDisease_ChronicDisease" Association="Self.FK_RelConsultChronicDisease_ChronicDisease">
-      <End Role="ChronicDisease" EntitySet="ChronicDisease" />
-      <End Role="RelConsultChronicDisease" EntitySet="RelConsultChronicDisease" />
-    </AssociationSet>
-    <AssociationSet Name="FK_RelConsultChronicDisease_ElectronicFile" Association="Self.FK_RelConsultChronicDisease_ElectronicFile">
-      <End Role="ElectronicFile" EntitySet="ElectronicFile" />
-      <End Role="RelConsultChronicDisease" EntitySet="RelConsultChronicDisease" />
-    </AssociationSet>
-    <AssociationSet Name="FK_RelConsultDisease_Disease" Association="Self.FK_RelConsultDisease_Disease">
-      <End Role="Disease" EntitySet="Disease" />
-      <End Role="RelConsultDisease" EntitySet="RelConsultDisease" />
-    </AssociationSet>
-    <AssociationSet Name="FK_RelConsultDisease_ElectronicFile" Association="Self.FK_RelConsultDisease_ElectronicFile">
-      <End Role="ElectronicFile" EntitySet="ElectronicFile" />
-      <End Role="RelConsultDisease" EntitySet="RelConsultDisease" />
-    </AssociationSet>
     <AssociationSet Name="FK_RelDiscountClinic_Clinic" Association="Self.FK_RelDiscountClinic_Clinic">
       <End Role="Clinic" EntitySet="Clinic" />
       <End Role="RelDiscountClinic" EntitySet="RelDiscountClinic" />
@@ -11489,6 +11581,38 @@ advertencia 6002: La tabla o vista 'dbIdSalud_mattel.dbo.vwWarehouseStock' no ti
     <AssociationSet Name="FK_Service_Status" Association="Self.FK_Service_Status">
       <End Role="Status" EntitySet="Status" />
       <End Role="Service" EntitySet="Service" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceOld_Clinic" Association="Self.FK_ServiceOld_Clinic">
+      <End Role="Clinic" EntitySet="Clinic" />
+      <End Role="ServiceOld" EntitySet="ServiceOld" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceOld_Concept" Association="Self.FK_ServiceOld_Concept">
+      <End Role="Concept" EntitySet="Concept" />
+      <End Role="ServiceOld" EntitySet="ServiceOld" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceOld_Medic" Association="Self.FK_ServiceOld_Medic">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="ServiceOld" EntitySet="ServiceOld" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceOld_Nurse" Association="Self.FK_ServiceOld_Nurse">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="ServiceOld" EntitySet="ServiceOld" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceOld_Order" Association="Self.FK_ServiceOld_Order">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="ServiceOld" EntitySet="ServiceOld" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceOld_OrderConcept" Association="Self.FK_ServiceOld_OrderConcept">
+      <End Role="OrdersConcepts" EntitySet="OrdersConcepts" />
+      <End Role="ServiceOld" EntitySet="ServiceOld" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceOld_Patient" Association="Self.FK_ServiceOld_Patient">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="ServiceOld" EntitySet="ServiceOld" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceOld_Status" Association="Self.FK_ServiceOld_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="ServiceOld" EntitySet="ServiceOld" />
     </AssociationSet>
     <AssociationSet Name="FK_State_State" Association="Self.FK_State_State">
       <End Role="State" EntitySet="State" />

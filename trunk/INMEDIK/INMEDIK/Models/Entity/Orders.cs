@@ -19,12 +19,14 @@ namespace INMEDIK.Models.Entity
         {
             this.CancelledPackages = new HashSet<CancelledPackages>();
             this.Consult = new HashSet<Consult>();
+            this.Exam = new HashSet<Exam>();
             this.Internment = new HashSet<Internment>();
             this.OrderPackage = new HashSet<OrderPackage>();
             this.OrderPromotion = new HashSet<OrderPromotion>();
             this.OrderPromotionDiscountApplied = new HashSet<OrderPromotionDiscountApplied>();
             this.OrdersConcepts = new HashSet<OrdersConcepts>();
             this.Payment = new HashSet<Payment>();
+            this.ServiceOld = new HashSet<ServiceOld>();
         }
     
         public int id { get; set; }
@@ -54,6 +56,8 @@ namespace INMEDIK.Models.Entity
         public virtual Employee Employee { get; set; }
         public virtual Employee Employee1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Exam> Exam { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Internment> Internment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderPackage> OrderPackage { get; set; }
@@ -66,5 +70,7 @@ namespace INMEDIK.Models.Entity
         public virtual ICollection<OrdersConcepts> OrdersConcepts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payment> Payment { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ServiceOld> ServiceOld { get; set; }
     }
 }

@@ -33,11 +33,13 @@ namespace INMEDIK.Models.Entity
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> Created { get; set; }
         public string Age { get; set; }
+        public Nullable<int> OrderId { get; set; }
     
         public virtual Clinic Clinic { get; set; }
         public virtual Concept Concept { get; set; }
         public virtual ElectronicFile ElectronicFile { get; set; }
         public virtual Employee Employee { get; set; }
+        public virtual Orders Orders { get; set; }
         public virtual Recipe Recipe { get; set; }
         public virtual Patient Patient { get; set; }
         public virtual Status Status { get; set; }

@@ -701,13 +701,10 @@
     <Compile Include="Models\Entity\Service.cs">
       <DependentUpon>dbINMEDIK.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entity\ServiceOld.cs">
+      <DependentUpon>dbINMEDIK.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entity\Specialty.cs">
-      <DependentUpon>dbINMEDIK.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entity\sp_getConceptsAutoComplete_Result.cs">
-      <DependentUpon>dbINMEDIK.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entity\sp_reportLastPurchaseByProduct_Result.cs">
       <DependentUpon>dbINMEDIK.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entity\State.cs">
@@ -951,6 +948,9 @@
       <DependentUpon>dbINMEDIK.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entity\vwSales.cs">
+      <DependentUpon>dbINMEDIK.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entity\vwSchedule.cs">
       <DependentUpon>dbINMEDIK.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entity\vwStock.cs">

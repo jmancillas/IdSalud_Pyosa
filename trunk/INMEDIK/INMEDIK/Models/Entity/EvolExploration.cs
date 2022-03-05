@@ -35,6 +35,7 @@ namespace INMEDIK.Models.Entity
         public Nullable<decimal> IMC { get; set; }
         public string PainScale { get; set; }
         public Nullable<int> PainScaleAdult { get; set; }
+        public Nullable<bool> saveVitalSigns { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EvolutionNote> EvolutionNote { get; set; }
